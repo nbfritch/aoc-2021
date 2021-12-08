@@ -71,11 +71,11 @@ def part2
     l1xg = l1x > l2x
     l1yg = l1y > l2y
 
-    b = (l1x-l2x).abs == (l1y-l2y).abs
+    b = (l1x - l2x).abs == (l1y - l2y).abs
 
-    (0..(l1x-l2x).abs).each do |xx|
+    (0..(l1x - l2x).abs).each do |xx|
       x = l1xg ? l1x - xx : l1x + xx
-      (0..(l1y-l2y).abs).each do |yx|
+      (0..(l1y - l2y).abs).each do |yx|
         y = l1yg ? l1y - yx : l1y + yx
         tx = {x, y}
         if (b && xx.abs == yx.abs) || !b
