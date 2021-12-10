@@ -1,5 +1,15 @@
 def part1
   puzzle = File.read_lines("./inputs/day8").map do |line|
+    h = line.split(" | ")[1]
+    counts = h.split(" ").map { |x| x.size }
+    counts.map { |c| (c == 2 || c == 3 || c == 4 || c == 7) ? 1 : 0 }.sum
+  end
+
+  puzzle.sum
+end
+
+def part2
+  puzzle = File.read_lines("./inputs/day8").map do |line|
     parts = line.split(" | ")
     keys = parts[0].split(" ").map { |l| l.chars.sort.to_set }
     values = parts[1].split(" ").map { |l| l.chars.sort.to_set }
@@ -16,10 +26,6 @@ def part1
       elsif s == 7
         decodedKeys[8]= key
       end
-    end
-
-    if decodedKeys.keys.size != 4
-      raise "Could not locate base key!"
     end
 
     keys.each do |key|
@@ -57,10 +63,6 @@ def part1
       end
     end
 
-    if decodedKeys.keys.size != 10 
-      raise "Key decoded incorrectly"
-    end
-
     flipSet = Hash(Set(Char), Int32).new
     decodedKeys.each do |d|
       flipSet[d[1]]= d[0]
@@ -72,9 +74,6 @@ def part1
     ones = -1
 
     values.each_index do |vi|
-      puts "Idx: #{vi}"
-      puts "Value: #{values[vi]}"
-      puts "Decoded #{flipSet[values[vi]]}"
       case vi
       when 0
         thou = flipSet[values[0]]
@@ -89,29 +88,13 @@ def part1
       end
     end
 
-    puts flipSet
-
-    if thou == -1 || hund == -1 || tens == -1 || ones == -1
-      puts thou
-      puts hund
-      puts tens
-      puts ones
-      raise "BAD"
-    end
-
     c = thou * 1000 + hund * 100 + tens * 10 + ones
-    puts "C #{c}"
     c
   end
 
-  puts puzzle
-  puts puzzle.sum
+  puzzle.sum
 end
 
-def part2
+puts "Day 8, Part 1: #{part1()}"
+puts "Day 8, Part 2: #{part2()}"
 
-end
-
-part1()
-part2()
-#997000 too low
