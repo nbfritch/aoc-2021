@@ -61,7 +61,13 @@ def basinCrawl(x : Int32, y : Int32, h : Int32, w : Int32, puzzle : Array(Array(
 
     basin.add({x, y})
 
-    basinCrawl(x, y+1, h, w, puzzle, )
+    basinCrawl(x, y+1, h, w, puzzle, basin, basins)
+
+    basinCrawl(x+1, y, h, w, puzzle, basin, basins)
+
+    basinCrawl(x, y-1, h, w, puzzle, basin, basins)
+
+    basinCrawl(x-1, y, h, w, puzzle, basin, basins)
 end
 
 def part2
@@ -74,16 +80,17 @@ def part2
 
     (0..height-1).each do |h|
         (0..width-1).each do |w|
-            if puzzle[h][w] != 9
-                print "_"
-            else
-                print puzzle[h][w]
+            basin = Set(Tuple(Int32, Int32)).new
+            basinCrawl(w, h, height, width, puzzle, basin, basins)
+            if basin.size > 0
+                basins.push(basin)
             end
         end
-
-        puts ""
     end
+
+    sizes = basins.map { |s| s.size }.sort
+    sizes[sizes.size-1] * sizes[sizes.size-2] * sizes[sizes.size-3]
 end
 
 puts "Day 9, Part 1: #{part1()}"
-part2()
+puts "Day 9, Part 1: #{part2()}"
